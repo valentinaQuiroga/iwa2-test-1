@@ -1,4 +1,4 @@
-const http = require('http'),
+const http = require('http');
 axios = require('axios'),
 logger = require('morgan'),
 cors = require('cors'),
@@ -10,33 +10,32 @@ var port = 8000;
 
 app.use(bodyParser.json())
 
-app.get('/hello/:foo/:bar', (req, res) => {
-    res.json({message: 'Hello BScBest!', data: [
+app.get('/hello/:foo/:bar', (req, res) =>{
+    res.json({message:'Hello BScBest!', data:[
         req.params.foo,
         req.params.bar
     ]});
 });
 
-// http.createServer((req, res)=>{
-//   res.write(users.join(", ")); //display the list of users on the page
-// //   res.write("\n\n"+emails.join(", ")); //display the list of users on the page
-//   res.end(); //end the response
-// }).listen(8000); // listen for requests on port 8000
+//post request
+app.post('/hello', (req, res) => {
+    res.json({result: 'Post was sent', data: req.body});
+});
+
+
+
 
 let users = []; // names of users will be stored here
-// let email = [];
 (async function getNames(){
   try{
-    const {data} = await axios.get("https://swapi.dev/api/people");
-    console.log(data.results);
+    const {data} = await axios.get("https://swapi.dev/api/people/");
+    console.log(data)
     users = data.results.map(user=>user.name);
-    // emails = data.map(email=>email.email);
     console.log(users);
-    // console.log(emails);
-  } catch(error){
+    } catch(error){
     console.log(error)
   }
-})();
+})()
 
 app.listen(port, function(err){
     console.log('Listening on port: ' + port);
