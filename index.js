@@ -8,22 +8,9 @@ bodyParser = require('body-parser');
 var app = express();
 var port = 8000;
 
-app.use(bodyParser.json())
-
-app.get('/hello/:foo/:bar', (req, res) =>{
-    res.json({message:'Hello BScBest!', data:[
-        req.params.foo,
-        req.params.bar
-    ]});
-});
-
-//post request
-app.post('/hello', (req, res) => {
-    res.json({result: 'Post was sent', data: req.body});
-});
-
-
-
+app.use(bodyParser.json());
+app.use(logger('tiny'));
+app.use(require('./routes'));
 
 let users = []; // names of users will be stored here
 (async function getNames(){
